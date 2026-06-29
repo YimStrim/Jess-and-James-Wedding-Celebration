@@ -1,8 +1,4 @@
-// ── Configuration ─────────────────────────────────────────
-// Paste your Apps Script Web App URL here after deploying
 const APPS_SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbxeK3heT_W4VtkgefqAkQyof0dPyu5oXEMwqI5C1a-ZpgG1ieWq21yMBlC2dv12Rptr/exec'
-
-// ── Boot ──────────────────────────────────────────────────
 document.addEventListener('DOMContentLoaded', init);
 
 async function init() {
@@ -29,13 +25,11 @@ async function init() {
   }
 }
 
-// ── Error state ───────────────────────────────────────────
 function renderError(message) {
   document.getElementById('rsvp-container').innerHTML =
     `<p class="rsvp-error">${escapeHtml(message)}</p>`;
 }
 
-// ── Form rendering ────────────────────────────────────────
 function renderForm(party, token) {
   const hasAnyResponse = party.some(g => g.attending === 'Yes' || g.attending === 'No');
   const submitLabel    = hasAnyResponse ? 'Update RSVP' : 'Send RSVP';
@@ -54,13 +48,11 @@ function renderForm(party, token) {
     cardsEl.insertAdjacentHTML('beforeend', buildGuestCard(guest));
   });
 
-  // Submit
   document.getElementById('rsvp-form').addEventListener('submit', e => {
     e.preventDefault();
     handleSubmit(party, token);
   });
 
-  // Attending toggle (event delegation)
   cardsEl.addEventListener('click', e => {
     const btn = e.target.closest('.toggle-btn');
     if (!btn) return;
@@ -69,14 +61,12 @@ function renderForm(party, token) {
     scope.querySelectorAll('.toggle-btn').forEach(b => b.classList.remove('active'));
     btn.classList.add('active');
 
-    // Show/hide the attending-details block
     const details = scope.querySelector('.attending-details');
     if (details) {
       details.classList.toggle('hidden', btn.dataset.value === 'No');
     }
   });
 
-  // Dietary "Other" textarea toggle (event delegation)
   cardsEl.addEventListener('change', e => {
     if (!e.target.classList.contains('dietary-select')) return;
     const scope    = e.target.closest('.guest-card, .plus-card');
@@ -85,18 +75,14 @@ function renderForm(party, token) {
   });
 }
 
-// ── Guest card HTML ───────────────────────────────────────
 function buildGuestCard(guest) {
   const isAttending    = guest.attending === 'Yes';
   const isNotAttending = guest.attending === 'No';
   const detailsHidden  = isNotAttending ? 'hidden' : '';
   const otherHidden    = guest.dietary !== 'Other' ? 'hidden' : '';
 
-  // Strip any previously saved +1 notes from the other-dietary field so we
-  // don't show them in the main guest's own text box
   let existingOther = (guest.otherDietary || '').replace(/;?\s*\+1 (Adult|Child)[^;]*/gi, '').trim();
 
-  // Build plus-guest cards for this guest
   let plusHtml = '';
   for (let i = 0; i < (guest.plusAdults || 0); i++) {
     plusHtml += buildPlusCard('adult', i);
@@ -138,7 +124,6 @@ function buildGuestCard(guest) {
   `;
 }
 
-// ── Plus-guest card HTML ──────────────────────────────────
 function buildPlusCard(type, index) {
   const label = type === 'adult' ? 'Adult guest' : 'Child guest';
   return `
@@ -172,7 +157,6 @@ function buildPlusCard(type, index) {
   `;
 }
 
-// ── Collect form state ────────────────────────────────────
 function collectResponses(party) {
   const cards = document.querySelectorAll('.guest-card');
   const responses = [];
@@ -196,7 +180,6 @@ function collectResponses(party) {
       const plusSelect  = plusCard.querySelector('.dietary-select');
       const plusOther   = plusCard.querySelector('.other-dietary');
 
-      // Only include this plus guest if an attending decision was made
       if (!plusActive) return;
 
       const entry = {
@@ -222,7 +205,6 @@ function collectResponses(party) {
   return responses;
 }
 
-// ── Validation ────────────────────────────────────────────
 function validate(responses) {
   for (const r of responses) {
     if (!r.attending) return 'Please select attending or not attending for each guest.';
@@ -238,7 +220,6 @@ function validate(responses) {
   return null;
 }
 
-// ── Submit handler ────────────────────────────────────────
 async function handleSubmit(party, token) {
   const responses = collectResponses(party);
   const error     = validate(responses);
@@ -260,7 +241,6 @@ async function handleSubmit(party, token) {
     const res    = await fetch(APPS_SCRIPT_URL, {
       method:  'POST',
       body:    JSON.stringify({ token, responses })
-      // No Content-Type header → defaults to text/plain → no CORS preflight needed
     });
     const result = await res.json();
 
@@ -278,7 +258,6 @@ async function handleSubmit(party, token) {
   }
 }
 
-// ── Thank-you state ───────────────────────────────────────
 function renderThankYou(responses) {
   const attending    = responses.filter(r => r.attending === 'Yes');
   const notAttending = responses.filter(r => r.attending === 'No');
@@ -302,7 +281,6 @@ function renderThankYou(responses) {
   `;
 }
 
-// ── Utility ───────────────────────────────────────────────
 function escapeHtml(str) {
   return String(str)
     .replace(/&/g,  '&amp;')

@@ -1,4 +1,3 @@
-/* ── Variables ───────────────────────────────────────────── */
 :root {
   --bg:          #FAFAF8;
   --surface:     #FFFFFF;
@@ -12,10 +11,8 @@
   --max-width:   580px;
 }
 
-/* ── Reset ───────────────────────────────────────────────── */
 *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 
-/* ── Base ────────────────────────────────────────────────── */
 html { font-size: 16px; }
 
 body {
@@ -33,7 +30,6 @@ main {
   margin: 0 auto;
 }
 
-/* ── Hero photo ──────────────────────────────────────────── */
 .hero-photo {
   margin: 0 0 2.5rem;
   border-radius: var(--radius);
@@ -53,7 +49,6 @@ main {
   .hero-photo { height: 260px; }
 }
 
-/* ── Invitation header ───────────────────────────────────── */
 .invitation {
   text-align: center;
   padding: 3rem 0 2.5rem;
@@ -100,7 +95,14 @@ h1 em {
   margin: 2rem auto;
 }
 
-/* ── Event details ───────────────────────────────────────── */
+.ceremony-context {
+  font-size: 0.9rem;
+  color: var(--text-light);
+  line-height: 1.65;
+  max-width: 34ch;
+  margin: 0 auto;
+}
+
 .details {
   display: grid;
   gap: 0.75rem;
@@ -141,7 +143,15 @@ h1 em {
   text-align: center;
 }
 
-/* ── RSVP section ────────────────────────────────────────── */
+.venue-link {
+  color: inherit;
+  text-decoration: underline;
+  text-decoration-color: var(--accent);
+  text-underline-offset: 3px;
+}
+
+.venue-link:hover { color: var(--accent-dark); }
+
 .rsvp-section {
   border-top: 1px solid var(--border);
   margin-top: 2.5rem;
@@ -164,7 +174,6 @@ h2 {
   letter-spacing: 0.04em;
 }
 
-/* ── Loading spinner ─────────────────────────────────────── */
 .loading {
   display: flex;
   justify-content: center;
@@ -182,7 +191,6 @@ h2 {
 
 @keyframes spin { to { transform: rotate(360deg); } }
 
-/* ── Error & empty states ────────────────────────────────── */
 .rsvp-error,
 .rsvp-empty {
   padding: 2rem 0;
@@ -191,13 +199,11 @@ h2 {
   line-height: 1.6;
 }
 
-/* ── Form ────────────────────────────────────────────────── */
 #rsvp-form {
   margin-top: 1.75rem;
   text-align: left;
 }
 
-/* ── Guest cards ─────────────────────────────────────────── */
 .guest-cards {
   display: grid;
   gap: 1rem;
@@ -218,7 +224,6 @@ h2 {
   margin-bottom: 1rem;
 }
 
-/* ── Plus guest cards ────────────────────────────────────── */
 .plus-card {
   background: #F7F6F2;
   border: 1px dashed var(--border);
@@ -236,7 +241,6 @@ h2 {
   margin-bottom: 0.875rem;
 }
 
-/* ── Field groups ────────────────────────────────────────── */
 .field-group {
   margin-bottom: 0.875rem;
 }
@@ -253,7 +257,6 @@ h2 {
   margin-bottom: 0.5rem;
 }
 
-/* ── Attending toggle ────────────────────────────────────── */
 .toggle-group {
   display: inline-flex;
   border: 1px solid var(--border);
@@ -288,7 +291,6 @@ h2 {
   color: #fff;
 }
 
-/* ── Dietary select ──────────────────────────────────────── */
 .dietary-select {
   width: 100%;
   padding: 0.55rem 0.875rem;
@@ -313,7 +315,6 @@ h2 {
   border-color: var(--accent);
 }
 
-/* ── Other dietary textarea ──────────────────────────────── */
 .other-dietary {
   width: 100%;
   margin-top: 0.5rem;
@@ -338,10 +339,8 @@ h2 {
 
 .other-dietary::placeholder { color: #b0aca4; }
 
-/* ── Attending details (hidden when not attending) ───────── */
 .attending-details.hidden { display: none; }
 
-/* ── Validation message ──────────────────────────────────── */
 .validation-msg {
   font-size: 0.82rem;
   color: var(--error);
@@ -351,7 +350,6 @@ h2 {
 
 .validation-msg.hidden { display: none; }
 
-/* ── Submit button ───────────────────────────────────────── */
 .btn-submit {
   display: block;
   width: 100%;
@@ -377,7 +375,6 @@ h2 {
   cursor: not-allowed;
 }
 
-/* ── Thank you state ─────────────────────────────────────── */
 .thank-you {
   padding: 2.5rem 0 1rem;
   text-align: center;
@@ -416,10 +413,8 @@ h2 {
   margin-top: 1.5rem;
 }
 
-/* ── Utility ─────────────────────────────────────────────── */
 .hidden { display: none !important; }
 
-/* ── Mobile tweaks ───────────────────────────────────────── */
 @media (max-width: 420px) {
   body { padding: 1.5rem 1rem 3rem; }
 
